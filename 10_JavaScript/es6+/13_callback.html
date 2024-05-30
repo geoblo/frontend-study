@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 동기(synchronous)와 비동기(asynchronous)의 개념
+    // 자바스크립트는 동기적으로 작동한다.
+    // 일반적으로 각 코드 블록이 이전 블록이 끝난 이후에 순차적으로 실행
+
+    // 동기/비동기 단순한 예
+    console.log(1);
+    setTimeout(() => { // 끝날때까지 기다리지 않고 다음으로 넘어감(비동기)
+      console.log(2);
+    }, 1000);
+    console.log(3);
+
+    // 비동기는 왜 필요할까?
+    // 어떤 명령을 실행할 때 그 명령이 언제 끝날지 예측하기 어렵거나 또는 주가 되는 작업이 아닐 때 사용
+    // 브라우저와 서버가 통신할 때 언제 끝날지 예측하기 힘듦(인터넷이 느리거나, 서버가 느리거나) 
+    // 통신이 끝날 때까지 아무것도 못 하고 있는 것보다는 다른 일을 하고 있다가 통신이 끝났을 때 콜백이 호출되면서 필요한 작업을 나중에 하면 훨씬 효율적
+    // 동기적으로 동작한다면 데이터를 가져오기 전까지 사용자는 빈 화면만 보고 있어야 함
+    // 예1: 네이버에서 네트워크 탭 열고 검색창에 ㅅ만 입력하고 통신 한것들 확인(비동기 통신, 새로고침 현상 안일어남)
+    // 예2: 네이버 지도 같은 경우 모든 데이터를 가져오기 전에 화면에 먼저 표시됨
+
+    // 비동기 통신의 예: fetch('api-url') (ES6)
+    // Fetch API를 사용하면 웹 브라우저가 웹 서버에 HTTP 요청을 할 수 있음
+    const data = fetch('https://jsonplaceholder.typicode.com/todos/1');
+    console.log('Finished'); // fetch가 호출된 직후 바로 실행됨
+    console.log(data); // 서버에서 data를 받아오기도 전임
+
+    // 만약 동기적으로 동작한다면, fetch 작업이 완료된 후에 다음 행이 실행될거라 예상하지만
+    // 실제로는 fetch가 호출된 직후 바로 다음 행에 있는 두 console.log()도 실행
+    // 이러한 현상이 발생하는 이유는 fetch가 비동기적으로 수행되기 때문
+    // 즉, fetch가 완료될 때까지 코드 실행을 중지하는 게 아니라 계속해서 다음 행을 실행
+
+    // 이를 해결하기 위해 1. 콜백 또는 2. 프로미스 를 사용하면 fetch()가 무언가를 반환하는 시점까지 기다리게 할 수 있다.
+  </script>
+</body>
+</html>
