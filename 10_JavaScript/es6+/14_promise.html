@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 2-1. 프로미스
+    // "결과를 약속합니다!"
+    // 예: (네트워크 요청 같은 시간이 걸리는 로직을 통해) 데이터를 받아오면 그 때 네가 등록한 콜백 함수를 실행할 것을 약속할게
+    // 비동기를 간편하게 처리할 수 있도록 도와주는 객체이다.(콜백을 대체하여 비동기 처리 표준으로 쓰임)
+    // - 기능을 수행하고 나서 정상적으로 완료됐다면 처리된 결과값을 전달
+    // - 문제가 발생하면 에러를 전달해줌
+
+     // (참고) 프로미스의 3가지 개념
+    // 1) PromiseState - 프로미스의 상태. 기능을 수행중인지, 완료됐는지(완료됐다면 성공인지 실패인지)에 대한 상태
+    // pending(프로미스가 만들어져서 기능을 수행중 일 때) 
+    //   -> 성공 시 resolve() 호출 -> fulfilled(성공적으로 다 끝냈을 때)
+    //   -> 실패 시 reject() 호출 -> rejected(오류가 발생했을 때)
+
+    // 2) PromiseResult - 프로미스 상태에 따른 결과
+    // "상태" -> 결과
+    // "pending" -> undefined
+    // "fulfilled" -> 우리가 넘긴 결과값
+    // "rejected" -> 일반적으로 Error 객체
+
+    // 3) Producing code - 기능을 수행한 후 해당하는 데이터를 만들어내는 코드(시간이 걸릴 수 있는 코드)
+    //    Consuming code - 받은 데이터를 소비하는 코드(결과를 기다려야 하는 코드)
+    
+    // 정리: 프로미스는 "Producing code"와 "Consuming code"를 연결하고 최종 성공 또는 실패를 나타내는 객체
+  </script>
+</body>
+</html>
