@@ -162,7 +162,43 @@
       });
     });
     
+    // 콜백 지옥의 예2
+    const loginUser = (id, password, onSuccess, onError) => {
+      // 2초간 네트워크 통신을 하는것처럼 꾸밈
+      setTimeout(() => {
+        if (id === 'goni' && password === '1234') {
+          // 로그인에 성공하면 서버에서 받아온 유저 정보(여기서는 그냥 id)를 콜백 함수에 전달함
+          onSuccess(id);
+        } else {
+          onError(new Error('존재하지 않음'));
+        }
+      }, 2000);
+    };
 
+    const getRoles = (userId, onSuccess, onError) => {
+      setTimeout(() => {
+        if (userId === 'goni') {
+          // 권한을 가져오는 작업을 하고 받아온 권한 정보를 콜백 함수에 전달함
+          onSuccess({ name: 'Goni Kim', role: 'admin' });
+        } else {
+          onError(new Error('접근 권한 없음'));
+        }
+      }, 1000);
+    };
+
+    const id = prompt('아이디를 입력하세요.');
+    const password = prompt('비밀번호를 입력하세요.');
+
+    loginUser(id, password, (userId) => {
+      getRoles(userId, (userInfo) => {
+        alert(`Welcome ${userInfo.name} (${userInfo.role})`);
+      }, (error) => {
+        console.error(error);
+      });
+    }, (error) => {
+      console.error(error);
+    });
+    
   </script>
 </body>
 </html>
