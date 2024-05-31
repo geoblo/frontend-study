@@ -173,6 +173,13 @@
     // 힌트: 가장 먼저 async 함수 만들기
     const loginAndGetRoles = async (id, password) => {
       // Quiz
+      try {
+        const userId = await loginUser(id, password);
+        const roleInfo = await getRoles(userId);
+        alert(`Welcome ${roleInfo.name} (${roleInfo.role})`);
+      } catch (err) {
+        console.error(err);
+      }
     };
     loginAndGetRoles(id, password);
   </script>
