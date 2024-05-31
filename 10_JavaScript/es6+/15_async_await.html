@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 3. async/await (ES2017) - 프로미스 대체가 아님(문법적 설탕)
+    // "프로미스를 작성하기 쉽게 만든다."
+    // async는
+    // - 함수 앞에 붙이는 키워드
+    // - 함수가 프로미스를 반환하도록 함
+    // await는
+    // - 프로미스 앞에 붙이는 키워드
+    // - 함수가 프로미스를 기다리게 함
+    // - async 함수 내에서만 사용할 수 있음
+    // - 함수 실행을 일시 중지하고 프로미스 결과(성공 또는 실패)를 기다리도록 함
+
+    // 비동기 함수 만들어보기 예제
+    // 일반적인 함수
+    function fetchData() {
+      return new Promise((resolve, reject) => {
+        // 시간이 걸리는 작업...
+        resolve('네가 원하는 데이터');
+      });
+    }
+
+    fetchData().then(res => {
+      console.log(res);
+    });
+
+    // 비동기 함수를 만들기 위해 함수 앞에 async 키워드를 붙이면 프로미스 객체를 만들지 않아도 자동으로 프로미스로 반환됨
+    async function fetchData2() {
+      // 시간이 걸리는 작업...
+      return '네가 원하는 데이터';
+    }
+
+    fetchData2().then(res => {
+      console.log(res);
+    });
+
+    // 3-1. 프로미스 then()을 사용한 방식과 async/await로 리팩터링 하기
+    // 예제1
+    function walk(amount) {
+      return new Promise((resolve, reject) => {
+        if (amount < 500) {
+          reject('too small');
+        }
+
+        setTimeout(() => {
+          resolve(`${amount}ms 동안 걸음`);
+        }, amount);
+      });
+    }
+
+    // walk(1000)
+    //   .then(res => {
+    //     console.log(res);
+    //     return walk(500);
+    //   })
+    //   .then(res => {
+    //     console.log(res);
+    //     return walk(700);
+    //   })
+    //   .then(res => {
+    //     console.log(res);
+    //     return walk(800);
+    //   })
+    //   .then(res => {
+    //     console.log(res);
+    //     return walk(100);
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //   });
+
+    // 예제1 리팩터링
+    async function go() {
+      // 프로미스가 완료될 때까지 기다려준다.
+      let res = await walk(500); // 0.5초 기다림
+      console.log(res);
+      res = await walk(900); // 0.9초 기다림
+      console.log(res);
+      res = await walk(600); // 0.6초 기다림
+      console.log(res);
+      res = await walk(700); // 0.7초 기다림
+      console.log(res);
+      res = await walk(400); // 실패 처리됨
+      console.log(res);
+      console.log('finished');
+      // await를 쓰면 우리가 평상시 코딩하는 것처럼 동기적 코드로 보임(가독성)
+    }
+    go();
+
+    // 예제2
+    // 깃허브 API로 특정 사용자 정보 조회
+    fetch('https://api.github.com/users/geoblo')
+      .then(res => {
+        return res.json();
+      })
+      .then(res => {
+        // 성공 시 데이터를 출력
+        console.log(res);
+      })
+      .catch(err => {
+        // 실패 시 오류 출력
+        console.error(err);
+      });
+
+    // 예제2 async/await로 리팩터링
+    // Quiz
+    const getGithubUserInfo = async username => {
+      try {
+        const res = await fetch(`https://api.github.com/users/${username}`);
+        const userInfo = await res.json();
+        console.log(userInfo);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getGithubUserInfo('geoblo');
+
+    // 3-2. 오류 처리
+    // 일반적인 프로미스에서는 catch()를 사용하여 프로미스가 반환하는 오류들을 처리
+    // async/await도 비슷 - try/catch 구문 사용
+    async function asyncFunc() {
+      try {
+        // 에러 발생 가능한 코드들을 여기에..
+        const response = fetch('api-url');
+        console.log(response);
+
+        // response 객체를 받았다고 해서 무조건 요청이 성공한 것은 아님!!
+        if (!response.ok) {
+          throw new Error(`${response.status} (${response.statusText})`);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    asyncFunc();
+
+    // Quiz
+    // 앞의 프로미스 체이닝 예제2를 async/await를 써서 리팩터링 하기
+    const loginUser = (id, password) => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (id === 'goni' && password === '1234') {
+            resolve(id);
+          } else {
+            reject(new Error('존재하지 않음'));
+          }
+        }, 2000);
+      });
+    };
+
+    const getRoles = (userId) => {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (userId === 'goni') {
+            resolve({ name: 'Goni Kim', role: 'admin' });
+          } else {
+            reject(new Error('접근 권한 없음'));
+          }
+        }, 1000);
+      });
+    };
+
+    const id = prompt('아이디를 입력하세요.');
+    const password = prompt('비밀번호를 입력하세요.');
+
+    // 힌트: 가장 먼저 async 함수 만들기
+    const loginAndGetRoles = async (id, password) => {
+      // Quiz
+    };
+    loginAndGetRoles(id, password);
+  </script>
+</body>
+</html>
