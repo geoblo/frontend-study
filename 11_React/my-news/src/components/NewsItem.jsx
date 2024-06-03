@@ -34,10 +34,28 @@ const NewsItemBlock = styled.div`
   }
 `;
 
-function NewsItem() {
+// 각 뉴스 정보를 보여주는 컴포넌트
+function NewsItem(props) {
+  const { article: { title, description, url, urlToImage } } = props;
+
   return (
-    <>
-    </>
+    <NewsItemBlock>
+      {/* 이미지가 있을때만 */}
+      {urlToImage && (
+        <div className="thumbnail">
+          <a href={url} target="_blank">
+            <img src={urlToImage} alt="news-image" />
+          </a>
+        </div>
+      )}
+
+      <div className="content">
+        <h2>
+          <a href={url} target="_blank">{title}</a>
+        </h2>
+        <p>{description}</p>
+      </div>
+    </NewsItemBlock>
   );
 };
 
