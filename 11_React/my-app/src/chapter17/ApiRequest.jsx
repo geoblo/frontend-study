@@ -1,6 +1,47 @@
+import { useState } from "react";
+import axios from "axios";
+
 function ApiRequest() {
+  // 서버에서 가져온 데이터를 담을 state
+  const [data, setData] = useState(null);
+
+  // 1. promise/then
+  const handleRequestById = (id) => {
+    axios.get(`https://jsonplaceholder.typicode.com/photos/${id}`)
+      .then((response) => {
+        console.log(response);
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  // Quiz
+  // 2. async/await로 리팩터링
+  const handleRequestByIdAsync = async (id) => {
+    try {
+      const response = await axios.get(`https://jsonplaceholder.typicode.com/photos/${id}`);
+      setData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
+      <div>
+        <button type="button" onClick={() => handleRequestById(21)}>불러오기</button>
+        <button type="button" onClick={() => setData(null)}>비우기</button>
+        <button type="button" onClick={() => handleRequestByIdAsync(21)}>불러오기</button>
+      </div>
+      {data && (
+        <>
+          <textarea cols="70" rows="8" value={JSON.stringify(data, null, 2)} readOnly />
+          <p>{data.title}</p>
+          <img src={data.thumbnailUrl} alt="thumbnail" />
+        </>
+      )}
     </>
   );
 };
