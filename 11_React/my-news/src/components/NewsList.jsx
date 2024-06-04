@@ -57,7 +57,7 @@ function NewsList() {
       setLoading(false);
     };
     fetchNewsData();
-  }, []);
+  }, [category]);
 
   // article 값이 없을 때 렌더링 막기
   // if (!articles) {
