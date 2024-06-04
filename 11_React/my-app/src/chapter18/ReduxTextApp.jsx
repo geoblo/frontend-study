@@ -1,6 +1,9 @@
+import Counter from "./features/counter/Counter";
+
 function ReduxTextApp() {
   return (
     <>
+      <Counter />
     </>
   );
 };
