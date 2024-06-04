@@ -67,8 +67,16 @@ const Category = styled(NavLink)`
 
 function Categories() {
   return (
-    <>
-    </>
+    <CategoriesBlock>
+      {categories.map((c) => {
+        return <Category
+          key={c.name}
+          to={c.name === 'all' ? '/' : `/${c.name}`}
+        >
+          {c.text}
+        </Category>;
+      })}
+    </CategoriesBlock>
   );
 };
 
