@@ -1,9 +1,11 @@
 import Counter from "./features/counter/Counter";
+import ProductList from "./features/product/ProductList";
 
 function ReduxTextApp() {
   return (
     <>
       <Counter />
+      <ProductList />
     </>
   );
 };
