@@ -8,9 +8,10 @@ const productSlice = createSlice({
   name: 'product',
   initialState,
   reducers: {
-    addToProductList: (state, action) => {
+    addToProductList: (state, { payload: productName }) => {
       console.log(action);
-      state.productList.push(action.payload);
+      // state.productList.push(action.payload);
+      state.productList.push(productName);
     },
   }
 });
