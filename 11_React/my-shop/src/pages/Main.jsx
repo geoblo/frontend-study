@@ -1,9 +1,13 @@
+import { useDebugValue, useEffect } from "react";
 import styled from "styled-components";
+import { Col, Container, Row } from "react-bootstrap";
+import axios from "axios";
+import { useDispatch } from "react-redux";
 
 // 리액트(JS)에서 이미지 파일 가져오기
 // 1) src 폴더 안 이미지(상대 경로로 import해서 사용)
 import yonexImg from "../images/yonex.jpg";
-import { Col, Container, Row } from "react-bootstrap";
+import { getAllProducts } from "../features/product/productSlice";
 
 const MainBackground = styled.div`
   height: 500px;
@@ -14,6 +18,22 @@ const MainBackground = styled.div`
 `;
 
 function Main() {
+  const dispatch = useDispatch();
+
+  // 처음 마운트 됐을 때 서버에 상품 목록 데이터를 요청하고
+  // 그 결과를 리덕스 스토어에 전역 상태로 저장
+  useEffect(() => {
+    // 서버에 상품 목록 요청
+    axios.get('https://my-json-server.typicode.com/geoblo/db-shop/products')
+      .then((response) => {
+        console.log(response.data);
+        dispatch(getAllProducts(response.data));
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
   return (
     <>
       {/* 메인 이미지 섹션 */}
