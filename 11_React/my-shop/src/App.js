@@ -1,24 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import { createGlobalStyle } from "styled-components";
+import { Button, Container, Nav, Navbar } from "react-bootstrap";
+import { Route, Routes } from "react-router-dom";
+import Layout from "./pages/Layout";
+
+// 글로벌(공통) 스타일 설정
+const GlobalStyle = createGlobalStyle`
+  body {
+    box-sizing: border-box;
+  }
+
+  * {
+    box-sizing: inherit;
+  }
+
+  #root {
+    text-align: center;
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {/* 부트스트랩 연습 */}
+      {/* 1) 리액트 부트스트랩 */}
+      {/* <Button variant="primary">Primary</Button> */}
+      {/* 2) 기존 부트스트랩 */}
+      {/* <button type="button" className="btn btn-primary">Primary</button> */}
+
+      <GlobalStyle />
+      
+      {/* Quiz: 헤더를 Layout 컴포넌트로 추출 및 Nested Route 구성해보기 */}
+
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route  />
+        </Route>
+
+      </Routes>
+
+    </>
   );
 }
 
