@@ -2,6 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./pages/Layout";
+import Main from "./pages/Main";
 
 // 글로벌(공통) 스타일 설정
 const GlobalStyle = createGlobalStyle`
@@ -37,7 +38,9 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route  />
+          {/* index: index route(여기서는 기본 자식 라우트를 의미) */}
+          <Route index element={<Main />} />
+          
         </Route>
 
       </Routes>

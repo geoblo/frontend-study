@@ -1,4 +1,5 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
+import { Outlet } from "react-router-dom";
 
 function Layout() {
   return (
@@ -17,7 +18,7 @@ function Layout() {
       </header>
 
       {/* 자식 컴포넌트가 렌더링 될 위치 */}
-
+      <Outlet />
 
       <footer>
         <p className="py-5 mb-0 bg-dark text-white">
