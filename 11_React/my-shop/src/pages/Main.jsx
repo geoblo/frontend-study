@@ -50,7 +50,7 @@ function Main() {
           <Row>
             {/* 부트스트랩 이용한 반응형 작업 */}
             {/* md >= 768px 이상에서 전체 12등분 중 4:4:4로 보여줌 */}
-            {/* <Col md={4} sm={6}>
+            <Col md={4} sm={6}>
               <img src="https://www.yonexmall.com/shop/data/goods/1645767865278s0.png" width="80%" />
               <h4>상품명</h4>
               <p>상품가격</p>
@@ -64,7 +64,7 @@ function Main() {
               <img src="https://www.yonexmall.com/shop/data/goods/1667190100104s0.png" width="80%" />
               <h4>상품명</h4>
               <p>상품가격</p>
-            </Col> */}
+            </Col>
 
             {/* ProductListItem 컴포넌트를 만들어서 반복 렌더링으로 바꾸고 데이터 바인딩 */}
             {/* Quiz: 
