@@ -2,12 +2,13 @@ import { useDebugValue, useEffect } from "react";
 import styled from "styled-components";
 import { Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import { getAllProducts, selectProductList } from "../features/product/productSlice";
 
 // 리액트(JS)에서 이미지 파일 가져오기
 // 1) src 폴더 안 이미지(상대 경로로 import해서 사용)
 import yonexImg from "../images/yonex.jpg";
-import { getAllProducts } from "../features/product/productSlice";
 
 const MainBackground = styled.div`
   height: 500px;
@@ -19,6 +20,8 @@ const MainBackground = styled.div`
 
 function Main() {
   const dispatch = useDispatch();
+  const productList = useSelector(selectProductList);
+
 
   // 처음 마운트 됐을 때 서버에 상품 목록 데이터를 요청하고
   // 그 결과를 리덕스 스토어에 전역 상태로 저장
@@ -47,7 +50,7 @@ function Main() {
           <Row>
             {/* 부트스트랩 이용한 반응형 작업 */}
             {/* md >= 768px 이상에서 전체 12등분 중 4:4:4로 보여줌 */}
-            <Col md={4} sm={6}>
+            {/* <Col md={4} sm={6}>
               <img src="https://www.yonexmall.com/shop/data/goods/1645767865278s0.png" width="80%" />
               <h4>상품명</h4>
               <p>상품가격</p>
@@ -61,7 +64,14 @@ function Main() {
               <img src="https://www.yonexmall.com/shop/data/goods/1667190100104s0.png" width="80%" />
               <h4>상품명</h4>
               <p>상품가격</p>
-            </Col>
+            </Col> */}
+
+            {/* ProductListItem 컴포넌트를 만들어서 반복 렌더링으로 바꾸고 데이터 바인딩 */}
+            {/* Quiz: 
+              1) 반복적인 상품 아이템을 src/components/ProductListItem 컴포넌트로 만들기
+              2) productList 배열을 반복하며 ProductListItem 컴포넌트를 렌더링 하기
+              3) 상품 정보를 props로 넘겨서 데이터 바인딩 하기
+            */}
           </Row>
         </Container>
       </section>

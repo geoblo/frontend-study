@@ -20,5 +20,8 @@ const productSlice = createSlice({
 // 액션 생성 함수
 export const { getAllProducts } = productSlice.actions;
 
+// 선택자 함수
+export const selectProductList = (state) => state.product.productList;
+
 // 리듀서 함수들
 export default productSlice.reducer;
