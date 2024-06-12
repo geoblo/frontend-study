@@ -1,6 +1,8 @@
 import { createGlobalStyle } from "styled-components";
 import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { Route, Routes, useParams } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+
 import Layout from "./pages/Layout";
 import Main from "./pages/Main";
 import ProductDetail from "./pages/ProductDetail";
@@ -45,12 +47,17 @@ function App() {
           {/* Quiz: 상품별 상세페이지 여러 개를 라우팅하려면? URL 파라미터 사용
             예: /detail/1로 접속하면 productId에 1이 담기도록 설정 */}
           <Route path="detail/:productId" element={<ProductDetail />} />
-          
-
         </Route>
-
       </Routes>
 
+      {/* 토스트 컨테이너 하나로 재사용
+        만약 다른 옵션의 토스트를 쓰고 싶다면 컨테이너 여러 개 사용 */}
+      <ToastContainer 
+        position="bottom-right"
+        autoClose={3000}
+        pauseOnFocusLoss={false}
+        theme="dark"
+      />
     </>
   );
 }
