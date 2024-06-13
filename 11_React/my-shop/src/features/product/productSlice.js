@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { getMoreProducts } from "../../api/productAPI";
 
 const initialState = {
   productList: [],
@@ -15,6 +16,14 @@ const initialState = {
 // 2) 요청이 성공하면 응답에 대한 상태 관리, 실패하면 에러에 대한 상태 관리가 쉬움
 
 // createAsyncThunk()는 비동기 작업을 처리하는 액션 생성 함수를 반환함
+export const getMoreProductsAsync = createAsyncThunk(
+  'product/getMoreProductsAsync', // 첫번째 인자값: 액션 타입
+  async () => { // 두번째 인자값: 액션이 발생했을 때 실행할 비동기 작업(주로 api요청)
+    const result = await getMoreProducts(); // 비동기 함수 실행 시 pending 상태
+    return result; // 값을 반환하면 fulfilled 상태로 바뀌고 action.payload에 담겨 리듀서 함수로 전달됨
+  },
+  // 세번째 인자값: 추가 옵션(비동기 처리 전 취소, 비동기 실행 중 취소 등의 옵션)
+);
 
 // 상품 정보를 담을 slice 만들기
 const productSlice = createSlice({
@@ -33,6 +42,19 @@ const productSlice = createSlice({
     addMoreProducts: (state, action) => {      
       state.productList.push(...action.payload);
     },
+  },
+  // thunk를 이용한 비동기적인 작업에는 extraReducers를 사용
+  extraReducers: (builder) => {
+    builder
+      .addCase(getMoreProductsAsync.pending, (state) => { // pending 상태 일 때 동작할 리듀서
+      
+      })
+      .addCase(getMoreProductsAsync.fulfilled, (state, action) => { // fulfilled 상태 일 때 동작할 리듀서
+      
+      })
+      .addCase(getMoreProductsAsync.rejected, (state) => { // rejected 상태 일 때 동작할 리듀서
+      
+      })
   }
 });
 
