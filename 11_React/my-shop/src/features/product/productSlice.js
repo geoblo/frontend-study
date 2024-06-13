@@ -4,6 +4,7 @@ import { getMoreProducts } from "../../api/productAPI";
 const initialState = {
   productList: [],
   selectedProduct: null,
+  status: 'idle', // API 요청 상태
 };
 
 // thunk를 이용한 비동기 작업 처리하기
@@ -47,13 +48,14 @@ const productSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getMoreProductsAsync.pending, (state) => { // pending 상태 일 때 동작할 리듀서
-      
+        state.status = 'loading';
       })
       .addCase(getMoreProductsAsync.fulfilled, (state, action) => { // fulfilled 상태 일 때 동작할 리듀서
-      
+        state.status = 'idle'; // success, complete 등
+        state.productList.push(...action.payload);
       })
       .addCase(getMoreProductsAsync.rejected, (state) => { // rejected 상태 일 때 동작할 리듀서
-      
+        state.status = 'fail';
       })
   }
 });
@@ -69,6 +71,7 @@ export const {
 // 선택자 함수
 export const selectProductList = (state) => state.product.productList;
 export const selectSelectedProduct = (state) => state.product.selectedProduct;
+export const selectStatus = (state) => state.product.status;
 
 // 리듀서 함수들
 export default productSlice.reducer;
