@@ -4,7 +4,7 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getAllProducts, selectProductList } from "../features/product/productSlice";
+import { addMoreProducts, getAllProducts, selectProductList } from "../features/product/productSlice";
 import ProductListItem from "../components/ProductListItem";
 
 // 리액트(JS)에서 이미지 파일 가져오기
@@ -44,7 +44,7 @@ function Main() {
 
   const handleGetMoreProducts = async () => {
     const result = await getMoreProducts();
-    console.log(result);
+    dispatch(addMoreProducts(result));
   };
 
   return (
