@@ -1,6 +1,6 @@
 import { useDebugValue, useEffect } from "react";
 import styled from "styled-components";
-import { Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -10,6 +10,7 @@ import ProductListItem from "../components/ProductListItem";
 // 리액트(JS)에서 이미지 파일 가져오기
 // 1) src 폴더 안 이미지(상대 경로로 import해서 사용)
 import yonexImg from "../images/yonex.jpg";
+import { getMoreProducts } from "../api/productAPI";
 // 2) public 폴더 안 이미지(root 경로로 바로 접근)
 // 빌드 시 src 폴더에 있는 코드와 파일은 압축이 되지만 public 폴더에 있는 것들은 그대로 보존
 // 이미지 같은 수정이 필요없는 static 파일의 경우 public에 보관하기도 함
@@ -41,6 +42,11 @@ function Main() {
       });
   }, []);
 
+  const handleGetMoreProducts = async () => {
+    const result = await getMoreProducts();
+    console.log(result);
+  };
+
   return (
     <>
       {/* 메인 이미지 섹션 */}
@@ -63,6 +69,15 @@ function Main() {
             {productList.map((product) => <ProductListItem key={product.id} product={product} />)}
           </Row>
         </Container>
+
+        {/* 상품 더보기 기능 만들기
+          더보기 버튼 클릭 시 axios를 사용하여 데이터 요청
+          받아온 결과를 전역 상태에 추가하기 위해 리듀서 추가 및 액션 생성 함수 export
+          스토어에 dispatch로 요청(액션) 보내기
+        */}
+        <Button variant="secondary" className="mb-4" onClick={handleGetMoreProducts}>
+          더보기
+        </Button>
       </section>
     </>
   );

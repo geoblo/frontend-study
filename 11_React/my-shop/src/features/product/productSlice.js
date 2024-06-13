@@ -19,6 +19,9 @@ const productSlice = createSlice({
     clearSelectedProduct: (state) => {
       state.selectedProduct = null;
     },
+    addMoreProducts: () => {
+      
+    },
   }
 });
 
