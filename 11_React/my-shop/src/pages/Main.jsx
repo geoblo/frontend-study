@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import { PulseLoader } from "react-spinners";
 
 import { addMoreProducts, getAllProducts, getMoreProductsAsync, selectProductList, selectStatus } from "../features/product/productSlice";
 import ProductListItem from "../components/ProductListItem";
@@ -72,6 +73,18 @@ function Main() {
               3) 상품 정보를 props로 넘겨서 데이터 바인딩 하기
             */}
             {productList.map((product) => <ProductListItem key={product.id} product={product} />)}
+
+            {/* 로딩 만들기 */}
+            {status === 'loading' &&
+              <PulseLoader
+                color="#36d7b7"
+                margin={50}
+                size={30}
+                cssOverride={{
+                  display: 'block'
+                }}
+              />
+            }
           </Row>
         </Container>
 
