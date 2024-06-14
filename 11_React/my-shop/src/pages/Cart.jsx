@@ -1,6 +1,11 @@
 import { Table } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { selectCartList } from "../features/cart/cartSlice";
 
 function Cart() {
+  const cartList = useSelector(selectCartList);
+  console.log(cartList);
+
   return (
     <>
       {/* 표 레이아웃 만들기 */}
@@ -14,12 +19,15 @@ function Cart() {
           </tr>
         </thead>
         <tbody>
-          <tr>
+          {/* <tr>
             <td>1</td>
             <td>라켓</td>
             <td>2</td>
             <td>199,000원</td>
-          </tr>
+          </tr> */}
+
+          {/* Quiz: cartList 반복 렌더링 및 데이터 바인딩 */}
+          
         </tbody>
       </Table>
     </>
