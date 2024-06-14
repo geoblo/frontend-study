@@ -22,9 +22,23 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-
+    // 수량을 변경하는 리듀서 만들기
+    // Quiz: 전달받은 상품의 id값으로 cartList에서 해당 상품을 찾아 수량을 1씩 증가/감소
+    increaseCount: (state, action) => {
+      const targetItem = state.cartList.find(cartItem => cartItem.id === action.payload);
+      targetItem.count += 1;
+    },
+    decreaseCount: (state, { payload: productId }) => {
+      const targetItem = state.cartList.find(cartItem => cartItem.id === productId);
+      targetItem.count -= 1;
+    },
   }
 });
+
+export const {
+  increaseCount,
+  decreaseCount
+} = cartSlice.actions;
 
 export const selectCartList = state => state.cart.cartList;
 
