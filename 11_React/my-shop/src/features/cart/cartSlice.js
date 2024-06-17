@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 const initialState = {
   cartList: [
@@ -44,13 +44,24 @@ const cartSlice = createSlice({
         state.cartList.push(product);
       }
     },
+    // Quiz: 장바구니에서 삭제하는 리듀서 만들기
+    removeItemFromCart: (state, { payload: id }) => {
+      // 방법1
+      // const targetIndex = state.cartList.findIndex(cartItem => cartItem.id === id);
+      // state.cartList.splice(targetIndex, 1);
+
+      // 방법2: filter() 사용 시
+      const newCartList = state.cartList.filter(cartItem => cartItem.id !== id);
+      state.cartList = newCartList;
+    },
   }
 });
 
 export const {
   increaseCount,
   decreaseCount,
-  addItemToCart
+  addItemToCart,
+  removeItemFromCart
 } = cartSlice.actions;
 
 export const selectCartList = state => state.cart.cartList;
