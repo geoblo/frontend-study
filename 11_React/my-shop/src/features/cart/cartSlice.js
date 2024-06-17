@@ -32,6 +32,12 @@ const cartSlice = createSlice({
       const targetItem = state.cartList.find(cartItem => cartItem.id === productId);
       targetItem.count -= 1;
     },
+    // Quiz: 상품 객체로 넘겨주면 cartList에 아이템을 추가하는 리듀서 만들기
+    // 이미 들어있는 상품이면 수량만 증가
+    // 장바구니에 없는 상품이면 새롭게 추가
+    addItemToCart: (state, { payload: product }) => {
+
+    },
   }
 });
 
