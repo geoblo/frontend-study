@@ -36,14 +36,21 @@ const cartSlice = createSlice({
     // 이미 들어있는 상품이면 수량만 증가
     // 장바구니에 없는 상품이면 새롭게 추가
     addItemToCart: (state, { payload: product }) => {
-
+      console.log(product);
+      const targetItem = state.cartList.find(cartItem => cartItem.id === product.id);
+      if (targetItem) {
+        targetItem.count += product.count;
+      } else {
+        state.cartList.push(product);
+      }
     },
   }
 });
 
 export const {
   increaseCount,
-  decreaseCount
+  decreaseCount,
+  addItemToCart
 } = cartSlice.actions;
 
 export const selectCartList = state => state.cart.cartList;
