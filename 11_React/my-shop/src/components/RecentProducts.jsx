@@ -26,17 +26,23 @@ function RecentProducts(props) {
     <RecentProductsWrapper>
       <Card.Header>최근 본 상품</Card.Header>
       <ListGroup variant="flush">
-        {recentProductsList.map(product => (
+        {recentProductsList.slice(0, 3).map(product => (
           <>
             <img 
               src={product.imagePath} 
               alt={product.title}
               className="cursor-pointer"
             />
-            <ListGroup.Item>{product.title}</ListGroup.Item>
+            <ListGroup.Item className="text-ellipsis">{product.title}</ListGroup.Item>
           </>
         ))}
       </ListGroup>
+
+      {recentProductsList.length > 3 &&
+        <Card.Body>
+          <Card.Link href="#">더보기</Card.Link>
+        </Card.Body>
+      }
     </RecentProductsWrapper>
   );
 };
