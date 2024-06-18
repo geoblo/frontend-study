@@ -38,6 +38,7 @@ const cartSlice = createSlice({
     addItemToCart: (state, { payload: product }) => {
       console.log(product);
       const targetItem = state.cartList.find(cartItem => cartItem.id === product.id);
+
       if (targetItem) {
         targetItem.count += product.count;
       } else {

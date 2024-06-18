@@ -68,6 +68,18 @@ function ProductDetail() {
     };
   }, []);
 
+  // 상품 상세페이지에 들어갔을 때 해당 상품이 존재할때만 id값을 localStorage에 추가
+  useEffect(() => {
+    console.log(product);
+
+    if (!product) return;
+    
+    let recentProducts = JSON.parse(localStorage.getItem('recentProducts')) || []; // 처음엔 null이니까 기본값으로 빈배열 넣어줌
+
+    recentProducts.push(productId);
+    localStorage.setItem('recentProducts', JSON.stringify(recentProducts)); // JSON 문자열로 저장
+  }, [product]);
+
   const handleChangeOrderCount = (e) => {
     // 숫자 외 입력 시 유효성 검사 후 경고 토스트 띄우기
     if (isNaN(e.target.value)) {
