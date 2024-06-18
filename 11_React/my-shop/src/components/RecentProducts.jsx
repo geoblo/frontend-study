@@ -1,4 +1,6 @@
+import React from "react";
 import { Card, ListGroup } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const RecentProductsWrapper = styled(Card)`
@@ -10,6 +12,7 @@ const RecentProductsWrapper = styled(Card)`
 `;
 
 function RecentProducts(props) {
+  const navigate = useNavigate();
   const { productList } = props;
 
   const recentProducts = JSON.parse(localStorage.getItem('recentProducts'));
@@ -27,14 +30,15 @@ function RecentProducts(props) {
       <Card.Header>최근 본 상품</Card.Header>
       <ListGroup variant="flush">
         {recentProductsList.slice(0, 3).map(product => (
-          <>
+          <React.Fragment key={product.id}>
             <img 
               src={product.imagePath} 
               alt={product.title}
               className="cursor-pointer"
+              onClick={() => navigate(`/detail/${product.id}`)}
             />
             <ListGroup.Item className="text-ellipsis">{product.title}</ListGroup.Item>
-          </>
+          </React.Fragment>
         ))}
       </ListGroup>
 
