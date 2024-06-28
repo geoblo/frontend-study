@@ -1,4 +1,9 @@
+import axios from "axios";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { loginSuccess } from "../features/user/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const LoginWrapper = styled.div`
   height: calc(100vh - 176px);
@@ -14,6 +19,9 @@ const LoginWrapper = styled.div`
 `;
 
 function Login() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [loginForm, setLoginForm] = useState({
     username: '',
     password: ''
@@ -26,6 +34,25 @@ function Login() {
       ...loginForm,
       [name]: value
     });
+  };
+
+  const handleLogin = async () => {
+    try {
+      const result = await axios.get(`http://ec2-13-209-77-178.ap-northeast-2.compute.amazonaws.com:8080/login?id=${loginForm.username}&pw=${loginForm.password}`);
+      console.log(result);
+
+      // 로그인 성공 시 서버가 내려준 토큰(JWT)과 사용자 정보
+      // const { token, user } = result.data;
+
+      // 전역 상태에 사용자 정보 저장
+      dispatch(loginSuccess({ name: '김재현', nickname: 'Goni Kim', role: 'member' }));
+      // 발급받은 토큰 저장
+      localStorage.setItem('token', result.data);
+
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
