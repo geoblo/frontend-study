@@ -1,4 +1,4 @@
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Button, Container, Nav, Navbar } from "react-bootstrap";
 import { Outlet, useNavigate } from "react-router-dom";
 
 function Layout() {
@@ -15,6 +15,8 @@ function Layout() {
               <Nav.Link onClick={() => navigate('/')}>홈</Nav.Link>
               <Nav.Link onClick={() => navigate('/cart')}>장바구니</Nav.Link>
             </Nav>
+
+            <Button variant="outline-success" onClick={() => navigate('/login')}>로그인</Button>
           </Container>
         </Navbar>
       </header>
