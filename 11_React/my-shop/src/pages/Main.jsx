@@ -111,7 +111,7 @@ function Main() {
         <Button variant="secondary" className="mb-4" onClick={async () => {
           try {
             const token = localStorage.getItem('token');
-            const response = await axios.get(`http://ec2-13-209-77-178.ap-northeast-2.compute.amazonaws.com:8080/board/list`, {
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/board/list`, {
               headers: {
                 Authorization: token
               }

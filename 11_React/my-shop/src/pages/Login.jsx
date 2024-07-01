@@ -38,7 +38,7 @@ function Login() {
 
   const handleLogin = async () => {
     try {
-      const result = await axios.get(`http://ec2-13-209-77-178.ap-northeast-2.compute.amazonaws.com:8080/login?id=${loginForm.username}&pw=${loginForm.password}`);
+      const result = await axios.get(`${process.env.REACT_APP_API_URL}/login?id=${loginForm.username}&pw=${loginForm.password}`);
       console.log(result);
 
       // 로그인 성공 시 서버가 내려준 토큰(JWT)과 사용자 정보

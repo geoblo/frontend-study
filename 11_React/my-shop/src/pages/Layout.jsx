@@ -11,7 +11,7 @@ function Layout() {
 
   const handleLogout = async () => {
     const token = localStorage.getItem('token');
-    const result = await axios.get(`http://ec2-13-209-77-178.ap-northeast-2.compute.amazonaws.com:8080/logout`, {
+    const result = await axios.get(`${process.env.REACT_APP_API_URL}/logout`, {
       headers: {
         Authorization: token
       }
