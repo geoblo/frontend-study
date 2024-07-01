@@ -15,6 +15,7 @@ import { getMoreProducts } from "../api/productAPI";
 import RecentProducts from "../components/RecentProducts";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { logoutSuccess } from "../features/user/userSlice";
 // 2) public 폴더 안 이미지(root 경로로 바로 접근)
 // 빌드 시 src 폴더에 있는 코드와 파일은 압축이 되지만 public 폴더에 있는 것들은 그대로 보존
 // 이미지 같은 수정이 필요없는 static 파일의 경우 public에 보관하기도 함
@@ -121,7 +122,11 @@ function Main() {
             toast.error(error.response.data.message, {
               position: 'top-center'
             });
-            navigate('/login');
+
+            if (error.response.data.code === '403') {
+              dispatch(logoutSuccess());
+              navigate('/login');
+            }
           }
         }}>
           게시물 조회
